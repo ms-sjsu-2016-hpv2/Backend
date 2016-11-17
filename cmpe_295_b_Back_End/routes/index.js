@@ -3,11 +3,10 @@ var router = express.Router();
 var request = require('request');
 var contants=require('./app_constants');
 
-router.get('/', function(req, res, next) {
+router.get('/start', function(req, res, next) {
 
   console.log("Directory name is"+__dirname);
 
-console.log("Token is "+contants.TOKEN);
 
 
 
@@ -86,6 +85,35 @@ request(
 
 
 router.get('/get_device_logs', function(req, res, next) {
+
+
+
+});
+
+
+router.get('/app_login', function(req, res, next) {
+
+res.render('login');
+
+});
+
+
+router.post('/validate_user', function(req, res, next) {
+
+    
+
+    var user_name=req.body.user_name;
+    var user_password=req.body.user_password;
+
+    if(user_name.trim()=="abc" && user_password.trim()=="abc"){
+
+
+    res.redirect('/start');
+
+    }else{
+
+        res.render('login');
+    }
 
 
 

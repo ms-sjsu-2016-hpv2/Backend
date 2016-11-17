@@ -7,7 +7,7 @@ var path = require('path');
 var routes = require('./routes/index');
 
 
-
+const bodyParser = require('body-parser');
 
 /*var server = http.createServer(function(req, res) {
   res.writeHead(200);
@@ -21,6 +21,9 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.use('/', routes);
 

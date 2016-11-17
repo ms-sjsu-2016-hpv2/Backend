@@ -1,4 +1,4 @@
-const TOKEN='ADD_TOKEN'
+const TOKEN=''
 
 
 module.exports={
