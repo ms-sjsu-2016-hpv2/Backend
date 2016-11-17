@@ -54,7 +54,7 @@ exports.registerDevice = function(req, res) {
                     } else {
 
                         //Create application and then add the device to it.
-                        var application_id = "testing_app";
+                        var application_id = device_name+"_"+device_vendor+"_"+sensor_type;
 
                         resin.models.application.create(application_id,'raspberry-pi')
                             .then(function(err, application){
@@ -125,4 +125,27 @@ exports.registerDevice = function(req, res) {
             console.log('Too bad!');
         }
     });
+}
+
+exports.setupDevice = function(req, res) {
+
+    //this should be the application id from the UI,
+    //if that is not possible we will have to fetch it from the database
+    var resioIO = req.param['application_id'];
+    //if you get an error here stating Javascript not supported format
+    //go to Webstorm -> Preferences -> Language and Frameworks
+    // -> JavaScript -> in JavaScript version language select -> ECMAScript6
+    cmd.get(
+        `
+            git clone https://github.com/jvedang/IoTRaspberryPi.git
+            cd IoTRaspberryPi
+            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+resinIO+`.git
+            git push resin master --force
+            git remote remove resin
+        `,
+        function(data){
+            console.log('the node-cmd cloned dir contains these files :\n\n',data)
+            res.send("{status_code:200, message:\"Application published on the device\"}");
+        }
+    );
 }
