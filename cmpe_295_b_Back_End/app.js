@@ -4,6 +4,7 @@ var resin = require('resin-sdk');
 var fs = require('fs');
 var path = require('path');
 
+var backend = require('./routes/backend');
 var routes = require('./routes/index');
 
 
@@ -29,62 +30,61 @@ app.use('/', routes);
 
 /*app.get('/', function (req, res) {
  // res.send('Hello World!');
- 
+
 });*/
+app.post('/register_mydevice', backend.registerDevice);
 
-
-
-app.get('/login', function (req, res) {
-var token="";
-
-var response_text="";
-
-	resin.auth.loginWithToken(token, function(error) {
-    if (error) throw error;
-	});
-
-
-	resin.auth.isLoggedIn().then(function(isLoggedIn) {
-    if (isLoggedIn) {
-        console.log('I\'m in!');
-        response_text="Resin Logged in";
-
-        
-
-
-       resin.models.device.getAll().then(function(devices) {
-    		console.log(devices);
-			});
-
-
-     /*  resin.models.os.download('raspberry-pi', function(error, stream) {
-    	if (error) throw error;
-   			 stream.pipe(fs.createWriteStream('foo/bar/image.img'));
-   			//res.send(stream);
-			});*/
-
-		/*resin.models.device.ping('', function(error) {
-   			 if (error) throw error;
-		});*/
-
-
-
-        res.send({"response":response_text});
-
-
-
-
-    } else {
-        console.log('Too bad!');
-
-        response_text="Resin Not Logged in";
-
-        res.send({"response":response_text});
-    }
-	});
-
-
-});
+// app.get('/login', function (req, res) {
+// var token="";
+//
+// var response_text="";
+//
+// 	resin.auth.loginWithToken(token, function(error) {
+//     if (error) throw error;
+// 	});
+//
+//
+// 	resin.auth.isLoggedIn().then(function(isLoggedIn) {
+//     if (isLoggedIn) {
+//         console.log('I\'m in!');
+//         response_text="Resin Logged in";
+//
+//
+//
+//
+//        resin.models.device.getAll().then(function(devices) {
+//     		console.log(devices);
+// 			});
+//
+//
+//      /*  resin.models.os.download('raspberry-pi', function(error, stream) {
+//     	if (error) throw error;
+//    			 stream.pipe(fs.createWriteStream('foo/bar/image.img'));
+//    			//res.send(stream);
+// 			});*/
+//
+// 		/*resin.models.device.ping('', function(error) {
+//    			 if (error) throw error;
+// 		});*/
+//
+//
+//
+//         res.send({"response":response_text});
+//
+//
+//
+//
+//     } else {
+//         console.log('Too bad!');
+//
+//         response_text="Resin Not Logged in";
+//
+//         res.send({"response":response_text});
+//     }
+// 	});
+//
+//
+// });
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
