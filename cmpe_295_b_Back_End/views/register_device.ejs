@@ -198,16 +198,17 @@
                             <div class="panel-body">
                                 <div id="">
 
-                                 <form role="form">
+                                 <form role="form" action="/register_mydevice" method="post">
 
                                         <div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">Device Name</label>
-                                            <input type="text" class="form-control" id="input_text_device_name">
+                                            <input type="text" class="form-control" id="device_name" name="device_name">
                                         </div>
+
 
                                         <div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">Device Vendor</label>
-                                            <select id="select_device_vendor" class="form-control">
+                                            <select id="device_vendor"  name="device_vendor" class="form-control">
                                                  <option>Raspberry Pie 2</option>
                                                  <option>Raspberry Pie 3</option>
                                                  <option>Intel Edison</option>
@@ -216,7 +217,7 @@
 
                                         <div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">Sensor Type</label>
-                                             <select id="select_sensor_type" class="form-control">
+                                             <select id="sensor_type" name="sensor_type" class="form-control">
                                                  <option>Temperature</option>
                                                  <option>Light</option>
                                                  <option>Touch</option>
