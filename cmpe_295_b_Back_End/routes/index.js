@@ -98,6 +98,23 @@ res.render('login');
 });
 
 
+router.get('/start_deployment/:device_uuid', function(req, res, next) {
+
+var device_object=new Object();
+
+//device_object.name=req.params.device_name;
+device_object.uuid=req.params.device_uuid;
+
+//res.render('deploy_app');
+res.render('deploy_app',{device_object:device_object});
+
+});
+
+
+
+
+
+
 router.post('/validate_user', function(req, res, next) {
 
     
@@ -120,7 +137,15 @@ router.post('/validate_user', function(req, res, next) {
 });
 
 
+router.post('/deploy_mydevice', function(req, res, next) {
 
+    var device_uuid_h=req.body.device_uuid_h;
+    var sensor_type=req.body.sensor_type;
+
+    console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+
+
+});
 
 
 
