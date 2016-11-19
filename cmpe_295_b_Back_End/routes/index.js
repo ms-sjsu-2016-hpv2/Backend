@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var contants=require('./app_constants');
+var resin = require("resin-sdk");
+var cmd = require("node-cmd");
 
 router.get('/start', function(req, res, next) {
 
@@ -142,9 +144,41 @@ router.post('/deploy_mydevice', function(req, res, next) {
     var device_uuid_h=req.body.device_uuid_h;
     var sensor_type=req.body.sensor_type;
 
-    console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+    //this should be the application id from the UI,
+    //if that is not possible we will have to fetch it from the database
+    // var resioIO = application_id;
+    //if you get an error here stating Javascript not supported format
+    //go to Webstorm -> Preferences -> Language and Frameworks
+    // -> JavaScript -> in JavaScript version language select -> ECMAScript6
+    //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+application_id+`.git
 
+    //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
+    //var device_uuid = "ca01246bdc124bbd18faf3503e9b4296b30aca1cacb6eb73499468e055979b";
 
+    if(sensor_type == "Temperature") {
+        console.log(device_uuid_h+" is the UUID");
+        //  res.send("{messsage:"+device_uuid+"}");
+        resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+            console.log(`This is vedang `+applicationName+` with this id`);
+            //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+            //https://github.com/jvedang/IoTRaspberryPi.git
+            cmd.get(
+                `
+            git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
+            cd IoT
+            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+            git push resin master --force
+            git remote remove resin
+        `,
+                function(data){
+                    console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                    res.send("{status_code:200, message:\"Application published on the device\"}");
+                }
+            );
+        });
+
+        console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+    }
 });
 
 

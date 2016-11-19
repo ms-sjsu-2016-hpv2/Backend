@@ -119,7 +119,6 @@ exports.registerDevice = function(req, res) {
 
 
                             });
-
                     }
                 }
 
@@ -152,7 +151,7 @@ exports.setupDevice = function(req, res) {
             `
             git clone https://github.com/jvedang/IoTRaspberryPi.git
             cd IoTRaspberryPi
-            git remote add resin git remote add resin gh_jvedang@git.resin.io:gh_jvedang/`+applicationName+`.git
+            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
             git push resin master --force
             git remote remove resin
         `,
@@ -162,5 +161,4 @@ exports.setupDevice = function(req, res) {
             }
         );
     });
-
 }
