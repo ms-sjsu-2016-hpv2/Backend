@@ -97,6 +97,12 @@ res.render('login');
 
 });
 
+router.get('/charts', function(req, res, next) {
+
+res.render('display_device_data');
+
+});
+
 
 router.get('/start_deployment/:device_uuid', function(req, res, next) {
 
