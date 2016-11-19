@@ -1,4 +1,4 @@
-var TOKEN = "ADD_TOKEN";
+var TOKEN = "ADD TOKEN";
 
 module.exports = {
     TOKEN : TOKEN
