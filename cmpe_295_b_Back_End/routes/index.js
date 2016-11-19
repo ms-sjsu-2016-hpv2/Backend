@@ -6,11 +6,7 @@ var contants=require('./app_constants');
 router.get('/start', function(req, res, next) {
 
   console.log("Directory name is"+__dirname);
-
-
-
-
-request(
+    request(
     {
         url : 'https://api.resin.io/v1/device',
         headers : {
@@ -27,12 +23,6 @@ request(
         res.render('start', { title: 'IOT Dashboard', device_list:body.d});
     }
 );
-
-
-
-
-
-
  
 });
 
@@ -118,11 +108,5 @@ router.post('/validate_user', function(req, res, next) {
 
 
 });
-
-
-
-
-
-
 
 module.exports = router;
