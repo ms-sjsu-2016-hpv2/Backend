@@ -12,16 +12,16 @@
     <title>SB Admin - Bootstrap Admin Template</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../components/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="../components/css/sb-admin.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
+    <link href="../components/css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -215,7 +215,16 @@
 
                                        <div class="form-group">
                                             <label>Device Name </label>
-                                            <p class="form-control-static" id="device_name"></p>
+                                            <p class="form-control-static" id="device_name" name="device_name">device_name</p>
+                                        </div>
+
+                                        
+
+                                        <div class="form-group">
+                                            <label for="device_uuid">Device UUID</label>
+                                            <input class="form-control" id="device_uuid" name="device_uuid" type="text" placeholder="UUID" value="<%=device_object.uuid%>" disabled>
+                                              <input type="hidden" id="device_uuid_h" name="device_uuid_h" value="<%=device_object.uuid%>">
+
                                         </div>
 
 
