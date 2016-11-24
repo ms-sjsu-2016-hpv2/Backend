@@ -178,7 +178,8 @@ router.post('/deploy_mydevice', function(req, res, next) {
         `,
                 function(data){
                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
-                    res.send("{status_code:200, message:\"Application published on the device\"}");
+                    //res.send("{status_code:200, message:\"Application published on the device\"}");
+                    res.render('display_device_data');
                 }
             );
         });
