@@ -1,3 +1,6 @@
+var express = require('express');
+var app = express();
+
 const mqtt = require('mqtt');
 const client =  mqtt.connect('mqtt://iot.eclipse.org', 1883, 60);
 
@@ -8,6 +11,7 @@ var topic1 = 'topic/GeneralizedIoT';
 var topic2 = '';
 
 client.on('connect', function () {
+	console.log("Connection Successful");
 	client.subscribe(topic1);
 	client.subscribe(topic2);
 });
@@ -30,3 +34,10 @@ function handleTopic2 (message) {
 	console.log('%s', message);
 }
 
+/*
+ * Express
+ */
+
+app.listen(3000, function() {
+  console.log('Example app listening on port 3000!');
+});
