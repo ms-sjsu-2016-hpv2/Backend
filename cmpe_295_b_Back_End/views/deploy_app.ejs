@@ -215,7 +215,12 @@
 
                                        <div class="form-group">
                                             <label>Device Name </label>
-                                            <p class="form-control-static" id="device_name" name="device_name">device_name</p>
+                                            <p class="form-control-static" id="device_name" name="device_name"><%=device_object.name%></p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Device Type </label>
+                                            <p class="form-control-static" id="device_name" name="device_name"><%=device_object.device_type%></p>
                                         </div>
 
                                         
@@ -230,17 +235,38 @@
 
                                         <div class="form-group has-success">
                                             <label class="control-label" for="inputSuccess">Select Application Type</label>
+
+
+                                        <%if(device_object.device_type=='raspberry-pi2'){%>
                                              <select id="sensor_type" name="sensor_type" class="form-control">
                                                  <option>Temperature</option>
                                                  <option>Motion</option>
                                                  <option>Light</option>
-                                                 <option>Touch</option>
+                                                 <option>Pollutant</option>
+                                                 <option>Sound</option>
+                                            </select>
+                                        <%}else if(device_object.device_type=='intel-edison'){%>
+
+                                            <select id="sensor_type" name="sensor_type" class="form-control">
+                                                <option>Temperature</option>
+                                                 <option>Motion</option>
+                                                 <option>Light</option>
+                                                 <option>Pollutant</option>
                                                  <option>Sound</option>
                                             </select>
 
+                                        <%}else{%> 
+
+                                            <select id="sensor_type" name="sensor_type" class="form-control">
+                                                 <option>This Device is Not Supported</option>
+                                            </select>
+
+                                         <%}%> 
                                         </div>
 
                                        <button type="submit" class="btn btn-primary">Deploy Application</button>
+
+                                       <!-- <a href="/viewDeviceLogs/<%=device_object.uuid%>" class="btn btn-info" role="button">View Device Logs</a>-->
 
                                 </form>
 

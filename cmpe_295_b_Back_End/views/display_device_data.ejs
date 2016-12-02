@@ -30,6 +30,154 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+    <!-- Code added by pdighe -->
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+      <script type="text/javascript">
+    var count=1;
+     var evtSource;
+     var log_evtSource;
+
+
+      google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBackgroundColor);
+ var data ;
+ var iot_data=new Array();
+
+function drawBackgroundColor(tempratureData) {
+     data = new google.visualization.DataTable();
+     
+      data.addColumn('number', 'X');
+      data.addColumn('number', 'IOT Data');
+
+
+      //data.addRows([
+        //[count, tempratureData]
+      //]);
+
+     data.addRows(iot_data);
+    //data.addRow(new Array(count,tempratureData));
+
+      count++;
+      console.log("Count is "+count);
+
+      var options = {
+        hAxis: {
+          title: 'Time'
+        },
+        vAxis: {
+          title: 'Data'
+        },
+        backgroundColor: '#f1f8e9'
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+
+
+     function start(){     
+                var eventList = document.getElementById("eventlist");
+               evtSource = new EventSource("http://localhost:3000/subscribe/<%=device_sensor%>");
+
+               // var newElement = document.createElement("li");
+               // newElement.innerHTML = "Messages:";
+               // eventList.appendChild(newElement);
+
+
+                evtSource.onmessage = function(e) {
+                    console.log("received event");
+                    console.log(e);
+                    //var newElement = document.createElement("li");
+
+                    //newElement.innerHTML = "message: " + e.data;
+                    //eventList.appendChild(newElement);
+
+                    iot_data.push(new Array(count,parseInt(e.data)));
+
+                    drawBackgroundColor(iot_data);
+                };      
+
+                evtSource.onerror = function(e) {
+                    console.log("EventSource failed.");
+                    alert("No Data recieved cannot Plot Graph");
+                };
+
+                if(evtSource.readyState==0){
+
+                    alert("Cannot start this functionality, application is not deployed yet");
+
+                }
+
+                console.log(evtSource);
+            }
+
+
+         function getDeviceLogs(){     
+                var event_log_div = document.getElementById("log_lines_ul");
+               log_evtSource = new EventSource("http://localhost:3000/getDeviceLogs/<%=device_uuid%>");
+
+               // var newElement = document.createElement("li");
+               // newElement.innerHTML = "Messages:";
+               // eventList.appendChild(newElement);
+
+
+                log_evtSource.onmessage = function(e) {
+                    console.log("received event");
+                    console.log(e);
+                    var newElement = document.createElement("li");
+
+                    newElement.innerHTML = " message: " + e.data;
+                    event_log_div.appendChild(newElement);
+
+                    //iot_data.push(new Array(count,parseInt(e.data)));
+
+                    //drawBackgroundColor(iot_data);
+                };      
+
+                log_evtSource.onerror = function(e) {
+                    console.log("EventSource failed.");
+
+                    var newElement = document.createElement("li");
+
+                    newElement.innerHTML = "Error while fetching data";
+                    event_log_div.appendChild(newElement);
+
+                };
+
+                 if(log_evtSource.readyState==0){
+
+                    alert("Cannot start this functionality, application is not deployed yet");
+
+                }
+
+                console.log(log_evtSource);
+            }
+
+      </script>
+
+
+      <script type="text/javascript">
+    var auto_refresh = setInterval(
+    function()
+    {
+
+        $.get( "/getDeviceStatus", function( data ) 
+            {
+
+                 var device_status_h3 = document.getElementById("device_status_h3");
+                 device_status_h3.innerHTML=data.device_object.status;
+
+
+            });
+
+
+    },5000);
+
+    </script>
+    <!-- End of code added by pdighe-->
+
 </head>
 
 <body>
@@ -180,14 +328,14 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Charts
+                            Generalized IOT
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-bar-chart-o"></i> Charts
+                                <i class="fa fa-bar-chart-o"></i> Device Data
                             </li>
                         </ol>
                     </div>
@@ -206,70 +354,70 @@
 
                 <!-- /.row -->
 
-                <!-- Morris Charts -->
+                <!-- Morris Charts 
                 <div class="row">
                     <div class="col-lg-12">
                         <h2 class="page-header">Morris Charts</h2>
                         <p class="lead">Device Data Analysis. For full usage instructions and documentation for Morris.js charts, visit .</p>
                     </div>
-                </div>
-                <!-- /.row -->
+                </div>-->
+
+
+
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="panel panel-green">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Area Line Graph Example with Tooltips</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Device Status</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="morris-area-chart"></div>
+                                    
+                                    Status <h3 id="device_status_h3"> </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Device Logs</h3>
+                            </div>
+                            <div class="panel-body">
+                                     <div id="log_div">
+                                         <button onclick="getDeviceLogs()">Get Device Logs</button>
+
+                                        <ul id="log_lines_ul"></ul>
+                                     </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Line Graph Example with Tooltips</h3>
+                            </div>
+                            <div class="panel-body">
+                                   <button onclick="evtSource.close()">Stop</button>
+                                    <button onclick="start()">Start</button>
+                                       <ul id="eventlist"> </ul>
+
+                                     <div id="chart_div"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- /.row -->
 
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Donut Chart Example</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-donut-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="panel panel-red">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Line Graph Example with Tooltips</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-line-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Bar Graph Example</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-bar-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <!-- /.row -->
 
             </div>

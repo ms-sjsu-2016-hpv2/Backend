@@ -17,6 +17,15 @@ body {
     }
 }
 
+
+/*This is css for Scrolling log files*/
+
+#log_div {
+  height: 200px; 
+  overflow: scroll;
+}
+
+/**/
 #device_location_map {
         height: 200px;
         width: 100%;
