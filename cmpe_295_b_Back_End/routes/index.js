@@ -139,7 +139,11 @@ router.post('/deploy_mydevice', function(req, res, next) {
     var sensor_type=req.body.sensor_type;
 
 
-    resin=req.session.resin;
+    //resin=req.session.resin;
+    //console.log("Token is "+req.session.user_token);
+    resin.auth.loginWithToken(req.session.user_token, function(error) {
+        if (error) throw error;
+    });
 
 
     resin.auth.isLoggedIn(function(error, isLoggedIn) {
@@ -374,7 +378,12 @@ res.writeHead(200, { "Content-Type": "text/event-stream",
                          "Cache-control": "no-cache" });
 
 
-resin=req.session.resin;
+//resin=req.session.resin;
+
+ resin.auth.loginWithToken(req.session.user_token, function(error) {
+        if (error) throw error;
+    });
+
 
 
     resin.auth.isLoggedIn(function(error, isLoggedIn) {
@@ -384,12 +393,15 @@ resin=req.session.resin;
             if (isLoggedIn) {
 
                 console.log("connected to resin io");
-                resin.logs.subscribe(req.params.device_uuid, function(error, logs) {
+                resin.logs.subscribe(req.session.device_details.uuid, function(error, logs) {
                     if (error) throw error;
 
                     logs.on('line', function(line) {
-                         console.log(line);
-                        res.write('data: ' + line.message + "\n\n");
+                        // console.log(line);
+                        //res.write('data: ' + line.timestamp + line.message + "\n\n");
+                          var msg="Log Time Stamp "+new Date(line.timestamp)+" Log Message "+ line.message;  
+
+                          res.write('data: ' + msg + "\n\n");
                        
                     });
                 });
@@ -406,6 +418,59 @@ router.get('/viewDeviceLogs/:device_uuid', function(req, res){
 
 
 res.render('display_device_data',{device_uuid:req.params.device_uuid});
+
+});
+
+router.get('/getDeviceStatus', function(req, res){ 
+
+
+//res.render('display_device_data',{device_uuid:req.params.device_uuid});
+resin.auth.loginWithToken(req.session.user_token, function(error) {
+        if (error) throw error;
+    });
+
+
+
+ request(
+            {
+                url : 'https://api.resin.io/resin/device('+req.session.device_details.id+')',
+                headers : {
+                    "Content-Type" : 'application/json',
+                    "Authorization" : 'Bearer '+req.session.user_token
+                },
+                json: true,
+            },
+            function (error, response, body) {
+            
+                req.session.device_details=body.d[0]; 
+                res.send({device_object:body.d[0]});
+
+            }
+        );
+
+
+
+
+
+/*resin.auth.isLoggedIn(function(error, isLoggedIn) {
+        if (error) throw error;
+
+
+            if (isLoggedIn) {
+
+
+                console.log("UUID "+req.session.device_details.uuid)
+                resin.models.device.getStatus(req.session.device_details.uuid, function(error, status) {
+                            if (error) throw error;
+                            console.log(status);
+                            res.send({device_status:status});
+                    });
+                        
+            }
+
+        });*/
+
+
 
 });
 
