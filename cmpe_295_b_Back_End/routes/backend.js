@@ -131,34 +131,37 @@ exports.registerDevice = function(req, res) {
     });
 }
 
-exports.setupDevice = function(req, res) {
-
-    //this should be the application id from the UI,
-    //if that is not possible we will have to fetch it from the database
-    // var resioIO = application_id;
-    //if you get an error here stating Javascript not supported format
-    //go to Webstorm -> Preferences -> Language and Frameworks
-    // -> JavaScript -> in JavaScript version language select -> ECMAScript6
-    //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+application_id+`.git
-
-    //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
-    var device_uuid = "ca01246bdc124bbd18faf3503e9b4296b30aca1cacb6eb73499468e055979b";
-    console.log(device_uuid+" is the UUID");
-  //  res.send("{messsage:"+device_uuid+"}");
-    resin.models.device.getApplicationName(device_uuid).then(function(applicationName) {
-        console.log(applicationName);
-        cmd.get(
-            `
-            git clone https://github.com/jvedang/IoTRaspberryPi.git
-            cd IoTRaspberryPi
-            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
-            git push resin master --force
-            git remote remove resin
-        `,
-            function(data){
-                console.log('the node-cmd cloned dir contains these files :\n\n',data);
-                res.send("{status_code:200, message:\"Application published on the device\"}");
-            }
-        );
-    });
-}
+/***
+ * Not in use currently, this method is called in index.js in deploy_device API call
+ ***/
+// exports.setupDevice = function(req, res) {
+//
+//     //this should be the application id from the UI,
+//     //if that is not possible we will have to fetch it from the database
+//     // var resioIO = application_id;
+//     //if you get an error here stating Javascript not supported format
+//     //go to Webstorm -> Preferences -> Language and Frameworks
+//     // -> JavaScript -> in JavaScript version language select -> ECMAScript6
+//     //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+application_id+`.git
+//
+//     //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
+//     var device_uuid = "ca01246bdc124bbd18faf3503e9b4296b30aca1cacb6eb73499468e055979b";
+//     console.log(device_uuid+" is the UUID");
+//   //  res.send("{messsage:"+device_uuid+"}");
+//     resin.models.device.getApplicationName(device_uuid).then(function(applicationName) {
+//         console.log(applicationName);
+//         cmd.get(
+//             `
+//             git clone https://github.com/jvedang/IoTRaspberryPi.git
+//             cd IoTRaspberryPi
+//             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
+//             git push resin master --force
+//             git remote remove resin
+//         `,
+//             function(data){
+//                 console.log('the node-cmd cloned dir contains these files :\n\n',data);
+//                 res.send("{status_code:200, message:\"Application published on the device\"}");
+//             }
+//         );
+//     });
+// }
