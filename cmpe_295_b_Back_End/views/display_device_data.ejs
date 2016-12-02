@@ -67,7 +67,7 @@ function drawBackgroundColor(tempratureData) {
           title: 'Time'
         },
         vAxis: {
-          title: 'Popularity'
+          title: 'Data'
         },
         backgroundColor: '#f1f8e9'
       };
@@ -128,7 +128,7 @@ function drawBackgroundColor(tempratureData) {
                     console.log(e);
                     var newElement = document.createElement("li");
 
-                    newElement.innerHTML = " Time Stamp "+e+" message: " + e.data.message;
+                    newElement.innerHTML = " message: " + e.data;
                     event_log_div.appendChild(newElement);
 
                     //iot_data.push(new Array(count,parseInt(e.data)));
@@ -157,6 +157,25 @@ function drawBackgroundColor(tempratureData) {
 
       </script>
 
+
+      <script type="text/javascript">
+    var auto_refresh = setInterval(
+    function()
+    {
+
+        $.get( "/getDeviceStatus", function( data ) 
+            {
+
+                 var device_status_h3 = document.getElementById("device_status_h3");
+                 device_status_h3.innerHTML=data.device_object.status;
+
+
+            });
+
+
+    },5000);
+
+    </script>
     <!-- End of code added by pdighe-->
 
 </head>
@@ -309,14 +328,14 @@ function drawBackgroundColor(tempratureData) {
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Charts
+                            Generalized IOT
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-bar-chart-o"></i> Charts
+                                <i class="fa fa-bar-chart-o"></i> Device Data
                             </li>
                         </ol>
                     </div>
@@ -335,15 +354,30 @@ function drawBackgroundColor(tempratureData) {
 
                 <!-- /.row -->
 
-                <!-- Morris Charts -->
+                <!-- Morris Charts 
                 <div class="row">
                     <div class="col-lg-12">
                         <h2 class="page-header">Morris Charts</h2>
                         <p class="lead">Device Data Analysis. For full usage instructions and documentation for Morris.js charts, visit .</p>
                     </div>
+                </div>-->
+
+
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Device Status</h3>
+                            </div>
+                            <div class="panel-body">
+                                    
+                                    Status <h3 id="device_status_h3"> </h3>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-
 
                   <div class="row">
                     <div class="col-lg-12">
