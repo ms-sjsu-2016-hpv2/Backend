@@ -233,8 +233,9 @@
                                     <p class="form-control-static" id="device_last_seen"><%=device_details.last_connectivity_event%></p>
                               </div>
 
+                              <%if(device_details.is_online){%>
                               <button type="submit" class="btn btn-primary">Setup Device</button>
-
+                              <%}%>
                         </form>
                     </div>
 

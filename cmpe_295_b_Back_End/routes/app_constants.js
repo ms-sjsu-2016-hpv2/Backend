@@ -1,5 +1,5 @@
 var TOKEN = "ADD TOKEN";
 
-module.exports = {
+exports.module = {
     TOKEN : TOKEN
 }
