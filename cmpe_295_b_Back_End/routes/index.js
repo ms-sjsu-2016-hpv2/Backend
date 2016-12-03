@@ -159,11 +159,149 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             console.log(`This is vedang `+applicationName+` with this id`);
                             //https://github.com/ms-sjsu-2016-hpv2/IoT.git
                             //https://github.com/jvedang/IoTRaspberryPi.git
+                            var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
                             cmd.get(
                                 `
-                            git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
-                            cd IoT
-                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+                            //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            git clone https://github.com/pankajdighe/raspberry_pi_2_temperature_dummy_application.git
+                            cd raspberry_pi_2_temperature_dummy_application
+                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
+                            //git_remote_add
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf raspberry_pi_2_temperature_dummy_application 
+                        `,
+                                function(data){
+                                    console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                    //res.send("{status_code:200, message:\"Application published on the device\"}");
+                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                }
+                            );
+                        });
+
+                        console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                    }
+
+
+
+                    if(sensor_type == "Light" && req.session.device_details.device_type=='raspberry-pi2') {
+                        console.log(device_uuid_h+" is the UUID");
+                        //  res.send("{messsage:"+device_uuid+"}");
+                        resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                            console.log(`This is vedang `+applicationName+` with this id`);
+                            //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            //https://github.com/jvedang/IoTRaspberryPi.git
+                            var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
+                            cmd.get(
+                                `
+                            //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            git clone https://github.com/pankajdighe/raspberry_pi_2_light_dummy_application.git
+                            cd raspberry_pi_2_light_dummy_application
+                           // git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
+                            //git_remote_add
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf raspberry_pi_2_light_dummy_application 
+                        `,
+                                function(data){
+                                    console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                    //res.send("{status_code:200, message:\"Application published on the device\"}");
+                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                }
+                            );
+                        });
+
+                        console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                    }
+
+
+                     if(sensor_type == "Sound" && req.session.device_details.device_type=='raspberry-pi2') {
+                        console.log(device_uuid_h+" is the UUID");
+                        //  res.send("{messsage:"+device_uuid+"}");
+                        resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                            console.log(`This is vedang `+applicationName+` with this id`);
+                            //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            //https://github.com/jvedang/IoTRaspberryPi.git
+                            var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
+                            cmd.get(
+                                `
+                            //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            git clone https://github.com/pankajdighe/raspberry_pi_2_sound_dummy_application.git
+                            cd raspberry_pi_2_sound_dummy_application
+                           // git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
+                            //git_remote_add
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf raspberry_pi_2_sound_dummy_application 
+                        `,
+                                function(data){
+                                    console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                    //res.send("{status_code:200, message:\"Application published on the device\"}");
+                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                }
+                            );
+                        });
+
+                        console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                    }
+
+
+                     if(sensor_type == "Motion" && req.session.device_details.device_type=='raspberry-pi2') {
+                        console.log(device_uuid_h+" is the UUID");
+                        //  res.send("{messsage:"+device_uuid+"}");
+                        resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                            console.log(`This is vedang `+applicationName+` with this id`);
+                            //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            //https://github.com/jvedang/IoTRaspberryPi.git
+                            var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
+                            cmd.get(
+                                `
+                            //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            git clone https://github.com/pankajdighe/raspberry_pi_2_motion_dummy_application.git
+                            cd raspberry_pi_2_motion_dummy_application
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
+                            //git_remote_add
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf raspberry_pi_2_motion_dummy_application 
+                        `,
+                                function(data){
+                                    console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                    //res.send("{status_code:200, message:\"Application published on the device\"}");
+                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                }
+                            );
+                        });
+
+                        console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                    }
+
+
+                     /*if(sensor_type == "Pollutant" && req.session.device_details.device_type=='raspberry-pi2') {
+                        console.log(device_uuid_h+" is the UUID");
+                        //  res.send("{messsage:"+device_uuid+"}");
+                        resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                            console.log(`This is vedang `+applicationName+` with this id`);
+                            //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            //https://github.com/jvedang/IoTRaspberryPi.git
+                            var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
+                            cmd.get(
+                                `
+                            //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            git clone https://github.com/pankajdighe/raspberry_pi_2_pollutant_dummy_application.git
+                            cd raspberry_pi_2_pollutant_dummy_application
+                           // git_remote_add
+                           git remote add resin gh_pankajdighe@git.resin.io:gh_gandhihardikm/pi2temperature.git
                             git push resin master --force
                             git remote remove resin
                         `,
@@ -171,6 +309,35 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                     //res.send("{status_code:200, message:\"Application published on the device\"}");
                                     res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                }
+                            );
+                        });
+
+                        console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                    }*/
+
+                     if(sensor_type == "Pollutant" && req.session.device_details.device_type=='raspberry-pi2') {
+                        console.log(device_uuid_h+" is the UUID");
+                        //  res.send("{messsage:"+device_uuid+"}");
+                        resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                            console.log(`This is vedang `+applicationName+` with this id`);
+                            //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            //https://github.com/jvedang/IoTRaspberryPi.git
+                            cmd.get(
+                                `
+                            git clone https://github.com/pankajdighe/raspberry_pi_2_pollutant_dummy_application.git
+                            cd raspberry_pi_2_pollutant_dummy_application
+                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf raspberry_pi_2_pollutant_dummy_application 
+                        `,
+                                function(data){
+                                    console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                   // res.send("{status_code:200, message:\"Application published on the device\"}");
+                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'light'});
                                 }
                             );
                         });
@@ -194,6 +361,8 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
                             git push resin master --force
                             git remote remove resin
+                            cd ..
+                            rm -rf intel_edison_light_dummy_application 
                         `,
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
@@ -216,12 +385,16 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             //https://github.com/jvedang/IoTRaspberryPi.git
                             cmd.get(
                                 `
-                            git clone https://github.com/pankajdighe/intel_edison_temperature_dummy_application.git
-                            cd intel_edison_temperature_dummy_application
+                           // git clone https://github.com/pankajdighe/intel_edison_temperature_dummy_application.git
+                           // cd intel_edison_temperature_dummy_application
+                            git clone https://github.com/pankajdighe/intel_edison_temperature_real_application.git
                             //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+                            cd intel_edison_temperature_real_application
                             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
                             git push resin master --force
                             git remote remove resin
+                            cd ..
+                            rm -rf intel_edison_temperature_real_application 
                         `,
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
@@ -250,6 +423,8 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
                             git push resin master --force
                             git remote remove resin
+                            cd ..
+                            rm -rf intel_edison_motion_dummy_application 
                         `,
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
@@ -278,6 +453,8 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
                             git push resin master --force
                             git remote remove resin
+                            cd ..
+                            rm -rf intel_edison_sound_dummy_application 
                         `,
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
@@ -305,6 +482,8 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
                             git push resin master --force
                             git remote remove resin
+                            cd ..
+                            rm -rf intel_edison_pollutant_dummy_application 
                         `,
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
@@ -318,6 +497,8 @@ router.post('/deploy_mydevice', function(req, res, next) {
                     }
 
 
+                   // console.log("No device Found to deploy");
+
 
 
                 }
@@ -328,7 +509,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
 
 
 
-router.get('/subscribe/:device_sensor', function(req, res){
+router.get('/subscribe', function(req, res){
 
 res.writeHead(200, { "Content-Type": "text/event-stream",
                          "Cache-control": "no-cache" });
@@ -339,8 +520,7 @@ const client =  mqtt.connect('mqtt://iot.eclipse.org', 1883, 60);
 var iotState = '';
 var connected = false;
 
-var device_sensor=req.params.device_sensor
-var topic1 = 'topic/GeneralizedIoT/'+device_sensor;
+var topic1 = 'topic/GeneralizedIoT/'+req.session.device_details.uuid;
 var topic2 = '';
 
 client.on('connect', function () {
