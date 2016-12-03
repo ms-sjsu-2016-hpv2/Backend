@@ -79,7 +79,7 @@ function drawBackgroundColor(tempratureData) {
 
      function start(){     
                 var eventList = document.getElementById("eventlist");
-               evtSource = new EventSource("http://localhost:3000/subscribe/<%=device_sensor%>");
+               evtSource = new EventSource("http://localhost:3000/subscribe");
 
                // var newElement = document.createElement("li");
                // newElement.innerHTML = "Messages:";
