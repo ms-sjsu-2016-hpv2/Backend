@@ -25,7 +25,7 @@ app.use('/', routes);
 
 
 app.post('/register_mydevice', backend.registerDevice);
-app.post('/setup_mydevice',backend.setupDevice);
+//app.post('/setup_mydevice',backend.setupDevice);
 
 app.get('/login', function (req, res) {
 

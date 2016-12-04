@@ -162,17 +162,13 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
                             cmd.get(
                                 `
-                            //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
-                            git clone https://github.com/pankajdighe/raspberry_pi_2_temperature_dummy_application.git
-                            cd raspberry_pi_2_temperature_dummy_application
-                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
-                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
+                            git clone https://github.com/jvedang/IoTRaspberryPi.git
+                            cd IoTRaspberryPi
                             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
-                            //git_remote_add
                             git push resin master --force
                             git remote remove resin
                             cd ..
-                            rm -rf raspberry_pi_2_temperature_dummy_application 
+                            rm -rf IoTRaspberryPi 
                         `,
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
@@ -255,7 +251,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                     }
 
 
-                     if(sensor_type == "Motion" && req.session.device_details.device_type=='raspberry-pi2') {
+                     if(sensor_type == "Motion" && (req.session.device_details.device_type=='raspberry-pi2')) {
                         console.log(device_uuid_h+" is the UUID");
                         //  res.send("{messsage:"+device_uuid+"}");
                         resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
@@ -497,6 +493,194 @@ router.post('/deploy_mydevice', function(req, res, next) {
                     }
 
 
+                if(sensor_type == "Temperature" && req.session.device_details.device_type=='raspberrypi3') {
+                    console.log(device_uuid_h+" is the UUID");
+                    //  res.send("{messsage:"+device_uuid+"}");
+                    resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                        console.log(`This is vedang `+applicationName+` with this id`);
+                        //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                        //https://github.com/jvedang/IoTRaspberryPi.git
+                        var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
+                        cmd.get(
+                            `
+                            git clone https://github.com/jvedang/IoTRaspberryPi.git
+                            cd IoTRaspberryPi
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/datareader.git
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf IoTRaspberryPi 
+                        `,
+                            function(data){
+                                console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                //res.send("{status_code:200, message:\"Application published on the device\"}");
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                            }
+                        );
+                    });
+
+                    console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                }
+
+
+
+                if(sensor_type == "Light" && req.session.device_details.device_type=='raspberrypi3') {
+                    console.log(device_uuid_h+" is the UUID");
+                    //  res.send("{messsage:"+device_uuid+"}");
+                    resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                        console.log(`This is vedang `+applicationName+` with this id`);
+                        //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                        //https://github.com/jvedang/IoTRaspberryPi.git
+                        var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
+                        cmd.get(
+                            `
+                            //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            git clone https://github.com/pankajdighe/raspberry_pi_2_light_dummy_application.git
+                            cd raspberry_pi_2_light_dummy_application
+                           // git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/datareader.git
+                            //git_remote_add
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf raspberry_pi_2_light_dummy_application 
+                        `,
+                            function(data){
+                                console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                //res.send("{status_code:200, message:\"Application published on the device\"}");
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                            }
+                        );
+                    });
+
+                    console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                }
+
+
+                if(sensor_type == "Sound" && req.session.device_details.device_type=='raspberrypi3') {
+                    console.log(device_uuid_h+" is the UUID");
+                    //  res.send("{messsage:"+device_uuid+"}");
+                    resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                        console.log(`This is vedang `+applicationName+` with this id`);
+                        //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                        //https://github.com/jvedang/IoTRaspberryPi.git
+                        var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
+                        cmd.get(
+                            `
+                            //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            git clone https://github.com/jvedang/IoTRaspberrySound.git
+                            cd IoTRaspberrySound
+                           // git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/datareader.git
+                            //git_remote_add
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf IoTRaspberrySound 
+                        `,
+                            function(data){
+                                console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                //res.send("{status_code:200, message:\"Application published on the device\"}");
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                            }
+                        );
+                    });
+
+                    console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                }
+
+
+                if(sensor_type == "Motion" && req.session.device_details.device_type=='raspberrypi3') {
+                    console.log(device_uuid_h+" is the UUID");
+                    //  res.send("{messsage:"+device_uuid+"}");
+                    resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                        console.log(`This is vedang `+applicationName+` with this id`);
+                        //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                        //https://github.com/jvedang/IoTRaspberryPi.git
+                        var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
+                        cmd.get(
+                            `
+                            //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            git clone https://github.com/pankajdighe/raspberry_pi_2_motion_dummy_application.git
+                            cd raspberry_pi_2_motion_dummy_application
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/datareader.git
+                            //git_remote_add
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf raspberry_pi_2_motion_dummy_application 
+                        `,
+                            function(data){
+                                console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                //res.send("{status_code:200, message:\"Application published on the device\"}");
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                            }
+                        );
+                    });
+
+                    console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                }
+
+
+                /*if(sensor_type == "Pollutant" && req.session.device_details.device_type=='raspberry-pi2') {
+                 console.log(device_uuid_h+" is the UUID");
+                 //  res.send("{messsage:"+device_uuid+"}");
+                 resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                 console.log(`This is vedang `+applicationName+` with this id`);
+                 //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                 //https://github.com/jvedang/IoTRaspberryPi.git
+                 var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
+                 cmd.get(
+                 `
+                 //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                 git clone https://github.com/pankajdighe/raspberry_pi_2_pollutant_dummy_application.git
+                 cd raspberry_pi_2_pollutant_dummy_application
+                 // git_remote_add
+                 git remote add resin gh_pankajdighe@git.resin.io:gh_gandhihardikm/pi2temperature.git
+                 git push resin master --force
+                 git remote remove resin
+                 `,
+                 function(data){
+                 console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                 //res.send("{status_code:200, message:\"Application published on the device\"}");
+                 res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                 }
+                 );
+                 });
+
+                 console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                 }*/
+
+                if(sensor_type == "Pollutant" && req.session.device_details.device_type=='raspberrypi3') {
+                    console.log(device_uuid_h+" is the UUID");
+                    //  res.send("{messsage:"+device_uuid+"}");
+                    resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                        console.log(`This is vedang `+applicationName+` with this id`);
+                        //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                        //https://github.com/jvedang/IoTRaspberryPi.git
+                        cmd.get(
+                            `
+                            git clone https://github.com/pankajdighe/raspberry_pi_2_pollutant_dummy_application.git
+                            cd raspberry_pi_2_pollutant_dummy_application
+                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/datareader.git
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf raspberry_pi_2_pollutant_dummy_application 
+                        `,
+                            function(data){
+                                console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                // res.send("{status_code:200, message:\"Application published on the device\"}");
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'light'});
+                            }
+                        );
+                    });
+
+                    console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                }
                    // console.log("No device Found to deploy");
 
 
