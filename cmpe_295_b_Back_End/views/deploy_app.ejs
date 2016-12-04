@@ -31,6 +31,7 @@
     <![endif]-->
 
 
+
   
 
 
@@ -211,7 +212,7 @@
                             <div class="panel-body">
                                 <div id="">
 
-                                 <form role="form" action="/deploy_mydevice" method="post">
+                                 <form role="form" id="deploy_app_form" action="/deploy_mydevice" method="post">
 
                                        <div class="form-group">
                                             <label>Device Name </label>
@@ -249,6 +250,7 @@
 
                                             <select id="sensor_type" name="sensor_type" class="form-control">
                                                 <option>Temperature</option>
+                                                <option>Touch</option>
                                                  <option>Motion</option>
                                                  <option>Light</option>
                                                  <option>Pollutant</option>
@@ -264,7 +266,10 @@
                                          <%}%> 
                                         </div>
 
-                                       <button type="submit" class="btn btn-primary">Deploy Application</button>
+                                       <button type="submit"   class="btn btn-primary">Deploy Application</button>
+
+
+                                        <img id="progress_gif" src="../components/images/ring-alt.gif" alt="" width="100" height="100" style="display: none">
 
                                        <!-- <a href="/viewDeviceLogs/<%=device_object.uuid%>" class="btn btn-info" role="button">View Device Logs</a>-->
 
@@ -440,19 +445,81 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="../components/js/jquery.js"></script>
 
-     <!-- Resin API Call -->
+     <!-- Resin API Call 
     <script src="js/api_call/app_constants.js"></script>
-    <script src="js/api_call/setup_device.js"></script>
+    <script src="js/api_call/setup_device.js"></script>-->
+
+
+<script type="text/javascript">
+
+ $("#deploy_app_form").submit(function(){
+
+            
+            $('#progress_gif').show();
+            
+        });
+
+    function myFunction(){
+  console.log("my function");
+
+    }
+
+    function startDeploy(){
+
+        console.log("Start deployment");
+
+
+
+
+       /*    $.ajax({
+              type: 'POST',
+              data:{'sensor_type':$('#sensor_type').val()},
+              dataType: 'json',
+              url: '/deploy_mydevice',
+              beforeSend: function () {
+                        $('#progress_gif').show();
+                                            },
+            complete: function () {
+                        $("#progress_gif").hide();
+                        },
+            success: function (json) {
+
+                    var jsonValues = JSON.parse(json);
+                    var device_uuid = jsonValues['device_uuid_h'];
+                    var device_sensor = jsonValues['device_sensor'];
+                    var device_object = jsonValues['device_object'];
+                    window.location = "display_device_data.ejs?device_uuid="+device_uuid+"&device_sensor="+device_sensor+"&device_object="+device_object+"";
+                    //$("#data").html("data receieved");
+                    console.log("Request success");
+                        }
+            });*/
+
+
+    }
+
+/*    $(document).ready(function(){
+
+    $("#deploy_app_button").click(startDeploy);
+
+    console.log("Page Loaded");
+
+
+
+    });*/
+
+
+
+    </script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../components/js/bootstrap.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
+    <script src="../components/js/plugins/morris/raphael.min.js"></script>
+    <script src="../components/js/plugins/morris/morris.min.js"></script>
+    <script src="../components/js/plugins/morris/morris-data.js"></script>
 
 </body>
 

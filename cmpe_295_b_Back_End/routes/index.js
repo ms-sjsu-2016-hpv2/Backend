@@ -135,8 +135,10 @@ router.post('/validate_user', function(req, res, next) {
 
 router.post('/deploy_mydevice', function(req, res, next) {
 
-    var device_uuid_h=req.body.device_uuid_h;
+    var device_uuid_h=req.session.device_details.uuid;
     var sensor_type=req.body.sensor_type;
+
+    console.log("Sensor Type "+sensor_type);
 
 
     //resin=req.session.resin;
@@ -232,8 +234,10 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             cmd.get(
                                 `
                             //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
-                            git clone https://github.com/pankajdighe/raspberry_pi_2_sound_dummy_application.git
-                            cd raspberry_pi_2_sound_dummy_application
+                            //git clone https://github.com/pankajdighe/raspberry_pi_2_sound_dummy_application.git
+                            //cd raspberry_pi_2_sound_dummy_application
+                            git clone https://github.com/jvedang/IoTRaspberrySound.git
+                            cd IoTRaspberrySound
                            // git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
                             //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
                             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
@@ -241,7 +245,8 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             git push resin master --force
                             git remote remove resin
                             cd ..
-                            rm -rf raspberry_pi_2_sound_dummy_application 
+                            rm -rf IoTRaspberrySound
+                            //rm -rf raspberry_pi_2_sound_dummy_application 
                         `,
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
@@ -340,6 +345,8 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                    // res.send("{status_code:200, message:\"Application published on the device\"}");
+                                   console.log("Returning");
+                                   //res.send({device_uuid:device_uuid_h,device_sensor:'Polution',device_object:req.session.device_details});
                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'Polution',device_object:req.session.device_details});
                                 }
                             );
@@ -374,6 +381,38 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                    // res.send("{status_code:200, message:\"Application published on the device\"}");
                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'light',device_object:req.session.device_details});
+                                }
+                            );
+                        });
+
+                        console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                    }
+
+                    if(sensor_type == "Touch" && req.session.device_details.device_type=='intel-edison') {
+                        console.log(device_uuid_h+" is the UUID");
+                        //  res.send("{messsage:"+device_uuid+"}");
+                        resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                            console.log(`This is vedang `+applicationName+` with this id`);
+                            //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                            //https://github.com/jvedang/IoTRaspberryPi.git
+                            cmd.get(
+                                `
+                            //git clone https://github.com/pankajdighe/intel_edison_light_dummy_application.git
+                            //cd intel_edison_light_dummy_application
+                            git clone https://github.com/pankajdighe/intel_edison_touch_real_application.git
+                            cd intel_edison_touch_real_application 
+                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            //rm -rf intel_edison_light_dummy_application 
+                            rm -rf intel_edison_touch_real_application 
+                        `,
+                                function(data){
+                                    console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                   // res.send("{status_code:200, message:\"Application published on the device\"}");
+                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'touch',device_object:req.session.device_details});
                                 }
                             );
                         });
