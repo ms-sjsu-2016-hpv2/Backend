@@ -131,6 +131,9 @@ exports.registerDevice = function(req, res) {
     });
 }
 
+/***
+ * Not in use currently, this method is called in index.js in deploy_device API call
+ ***/
 exports.setupDevice = function(req, res) {
 
     //this should be the application id from the UI,
