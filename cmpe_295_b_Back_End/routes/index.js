@@ -177,7 +177,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                     //res.send("{status_code:200, message:\"Application published on the device\"}");
-                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature',device_object:req.session.device_details});
                                 }
                             );
                         });
@@ -212,7 +212,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                     //res.send("{status_code:200, message:\"Application published on the device\"}");
-                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'light',device_object:req.session.device_details});
                                 }
                             );
                         });
@@ -246,7 +246,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                     //res.send("{status_code:200, message:\"Application published on the device\"}");
-                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'sound',device_object:req.session.device_details});
                                 }
                             );
                         });
@@ -266,19 +266,22 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             cmd.get(
                                 `
                             //git clone https://github.com/ms-sjsu-2016-hpv2/IoT.git
-                            git clone https://github.com/pankajdighe/raspberry_pi_2_motion_dummy_application.git
-                            cd raspberry_pi_2_motion_dummy_application
+                            //git clone https://github.com/pankajdighe/raspberry_pi_2_motion_dummy_application.git
+                            //cd raspberry_pi_2_motion_dummy_application
+                            git clone https://github.com/pankajdighe/raspberry_pi_2_motion_real_application.git
+                            cd raspberry_pi_2_motion_real_application
                             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/pi2temperature.git
                             //git_remote_add
                             git push resin master --force
                             git remote remove resin
                             cd ..
-                            rm -rf raspberry_pi_2_motion_dummy_application 
+                            //rm -rf raspberry_pi_2_motion_dummy_application 
+                            rm -rf raspberry_pi_2_motion_real_application
                         `,
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                     //res.send("{status_code:200, message:\"Application published on the device\"}");
-                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                    res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'motion',device_object:req.session.device_details});
                                 }
                             );
                         });
@@ -337,7 +340,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                    // res.send("{status_code:200, message:\"Application published on the device\"}");
-                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'light'});
+                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'Polution',device_object:req.session.device_details});
                                 }
                             );
                         });
@@ -355,19 +358,22 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             //https://github.com/jvedang/IoTRaspberryPi.git
                             cmd.get(
                                 `
-                            git clone https://github.com/pankajdighe/intel_edison_light_dummy_application.git
-                            cd intel_edison_light_dummy_application
+                            //git clone https://github.com/pankajdighe/intel_edison_light_dummy_application.git
+                            //cd intel_edison_light_dummy_application
+                            git clone https://github.com/pankajdighe/intel_edison_light_real_application.git
+                            cd intel_edison_light_real_application 
                             //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
                             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
                             git push resin master --force
                             git remote remove resin
                             cd ..
-                            rm -rf intel_edison_light_dummy_application 
+                            //rm -rf intel_edison_light_dummy_application 
+                            rm -rf intel_edison_light_real_application 
                         `,
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                    // res.send("{status_code:200, message:\"Application published on the device\"}");
-                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'light'});
+                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'light',device_object:req.session.device_details});
                                 }
                             );
                         });
@@ -388,7 +394,6 @@ router.post('/deploy_mydevice', function(req, res, next) {
                            // git clone https://github.com/pankajdighe/intel_edison_temperature_dummy_application.git
                            // cd intel_edison_temperature_dummy_application
                             git clone https://github.com/pankajdighe/intel_edison_temperature_real_application.git
-                            //git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/`+applicationName+`.git
                             cd intel_edison_temperature_real_application
                             git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/edisonapps.git
                             git push resin master --force
@@ -399,7 +404,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                    // res.send("{status_code:200, message:\"Application published on the device\"}");
-                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature',device_object:req.session.device_details});
                                 }
                             );
                         });
@@ -429,7 +434,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                    // res.send("{status_code:200, message:\"Application published on the device\"}");
-                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'motion'});
+                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'motion',device_object:req.session.device_details});
                                 }
                             );
                         });
@@ -459,7 +464,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                    // res.send("{status_code:200, message:\"Application published on the device\"}");
-                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'sound'});
+                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'sound',device_object:req.session.device_details});
                                 }
                             );
                         });
@@ -488,7 +493,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                                 function(data){
                                     console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                    // res.send("{status_code:200, message:\"Application published on the device\"}");
-                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'pollutants'});
+                                   res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'pollutants',device_object:req.session.device_details});
                                 }
                             );
                         });
