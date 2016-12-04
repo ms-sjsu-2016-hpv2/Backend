@@ -519,7 +519,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             function(data){
                                 console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                 //res.send("{status_code:200, message:\"Application published on the device\"}");
-                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature',device_object:req.session.device_details});
                             }
                         );
                     });
@@ -527,7 +527,36 @@ router.post('/deploy_mydevice', function(req, res, next) {
                     console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
                 }
 
+                if(sensor_type == "Humidity" && req.session.device_details.device_type=='raspberrypi3') {
 
+                    console.log("Inside Humidity sensor");
+                    console.log(device_uuid_h+" is the UUID");
+                    //  res.send("{messsage:"+device_uuid+"}");
+                    resin.models.device.getApplicationName(device_uuid_h).then(function(applicationName) {
+                        console.log(`This is vedang `+applicationName+` with this id`);
+                        //https://github.com/ms-sjsu-2016-hpv2/IoT.git
+                        //https://github.com/jvedang/IoTRaspberryPi.git
+                        var git_remote_add="git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/"+applicationName+".git"
+                        cmd.get(
+                            `
+                            git clone https://github.com/jvedang/IoTRaspberryHumidity.git
+                            cd IoTRaspberryHumidity
+                            git remote add resin gh_jvedang@git.resin.io:gh_gandhihardikm/datareader.git
+                            git push resin master --force
+                            git remote remove resin
+                            cd ..
+                            rm -rf IoTRaspberryHumidity 
+                        `,
+                            function(data){
+                                console.log('the node-cmd cloned dir contains these files :\n\n',data);
+                                //res.send("{status_code:200, message:\"Application published on the device\"}");
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'Humidity',device_object:req.session.device_details});
+                            }
+                        );
+                    });
+
+                    console.log("Device ID "+device_uuid_h+" Sensor Type "+sensor_type);
+                }
 
                 if(sensor_type == "Light" && req.session.device_details.device_type=='raspberrypi3') {
                     console.log(device_uuid_h+" is the UUID");
@@ -554,7 +583,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             function(data){
                                 console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                 //res.send("{status_code:200, message:\"Application published on the device\"}");
-                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature',device_object:req.session.device_details});
                             }
                         );
                     });
@@ -588,7 +617,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             function(data){
                                 console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                 //res.send("{status_code:200, message:\"Application published on the device\"}");
-                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'sound',device_object:req.session.device_details});
                             }
                         );
                     });
@@ -620,7 +649,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             function(data){
                                 console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                 //res.send("{status_code:200, message:\"Application published on the device\"}");
-                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'temperature'});
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'motion',device_object:req.session.device_details});
                             }
                         );
                     });
@@ -679,7 +708,7 @@ router.post('/deploy_mydevice', function(req, res, next) {
                             function(data){
                                 console.log('the node-cmd cloned dir contains these files :\n\n',data);
                                 // res.send("{status_code:200, message:\"Application published on the device\"}");
-                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'light'});
+                                res.render('display_device_data',{device_uuid:device_uuid_h,device_sensor:'pollutant',device_object:req.session.device_details});
                             }
                         );
                     });
